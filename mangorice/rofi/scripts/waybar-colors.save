@@ -1,0 +1,50 @@
+
+#!/usr/bin/env bash
+
+STYLE="$HOME/.config/waybar/style.css"
+
+# Меню выбора
+chosen=$(echo -e "Nord Blue\nNord Red\nNord Green\nNord Yellow\nNord Purple\nNord Orange\nNord Cyan\nNord Frost\nNord Dark Gray\nNord Gray\nNord Light Gray\nNord Snow\nNord Frost Gray\nNord Polar Night" | rofi -dmenu -i -p "Waybar Accent")
+
+[ -z "$chosen" ] && exit 0
+
+# Определяем цвет
+case "$chosen" in
+    "Nord Blue")   color="#88c0d0" ;;
+    "Nord Red")    color="#bf616a" ;;
+    "Nord Green")  color="#a3be8c" ;;
+    "Nord Yellow") color="#ebcb8b" ;;
+    "Nord Purple") color="#b48ead" ;;
+    "Nord Orange") color="#d08770" ;;
+    "Nord Cyan")   color="#8fbcbb" ;;
+    "Nord Frost")  color="#5e81ac" ;;
+    "Nord Dark Gray")  color="#3b4252" ;;
+    "Nord Gray")  color="#434c5e" ;;
+    "Nord LIght Gray")  color="#4c566a" ;;
+    "Nord Snow")  color="#d8dee9" ;;
+    "Nord Frost Gray")  color="#81a1c1" ;;
+    "Nord Polar Night")  color="#2e3440" ;;
+    *) exit 0 ;;
+esac
+
+# Меняем цвета в style.css
+sed -i \
+    -e "s|@define-color blue .*|@define-color blue $color;|" \
+    -e "s|@define-color red .*|@define-color red $color;|" \
+    -e "s|@define-color green .*|@define-color green $color;|" \
+    -e "s|@define-color mauve .*|@define-color mauve $color;|" \
+    -e "s|@define-color yellow .*|@define-color yellow $color;|" \
+    -e "s|@define-color peach .*|@define-color peach $color;|" \
+    -e "s|@define-color text .*|@define-color text $color;|" \
+    -e "s|@define-color overlay0 .*|@define-color overlay0 $color;|" \
+    -e "s|@define-color subtext0 .*|@define-color subtext0 $color;|" \
+    -e "s|@define-color surface1 .*|@define-color surface1 $color;|" \
+    -e "s|@define-color surface0 .*|@define-color surface0 $color;|" \
+  
+    "$STYLE"
+
+# Перезапуск waybar
+pkill waybar
+waybar &
+
+notify-send "Waybar" "Accent → $chosen"

@@ -1,0 +1,15 @@
+configuration {
+    modi: "drun,run,window,wallpaper:\~/.config/rofi/scripts/wallpaper";
+    combi-modi: "drun,wallpaper";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    font: "JetBrainsMono Nerd Font 12";
+    drun-display-format: "{name}";
+    display-drun: "";
+    display-run: "";
+    display-window: "";
+    disable-history: false;
+}
+
+@theme "nord-me"
+

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+COVER="/tmp/eww-cover.jpg"
+DEFAULT="$HOME/.config/eww/default-cover.png"   # можешь потом положить свою картинку
+
+# Пробуем получить обложку
+art=$(playerctl metadata mpris:artUrl 2>/dev/null)
+
+if [[ -z "$art" ]]; then
+  echo "$DEFAULT"
+  exit
+fi
+
+# Если это локальный файл
+if [[ "$art" == file://* ]]; then
+  echo "${art#file://}"
+  exit
+fi
+
+# Если это http — скачиваем
+curl -sL "$art" -o "$COVER" 2>/dev/null && echo "$COVER" || echo "$DEFAULT"2

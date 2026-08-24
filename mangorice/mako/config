@@ -1,0 +1,37 @@
+
+max-visible=5
+sort=-time
+layer=overlay
+anchor=top-right
+font=JetBrainsMono Nerd Font 11
+width=340
+height=110
+margin=12
+padding=12
+border-size=2
+border-radius=14
+icons=1
+max-icon-size=56
+icon-location=left
+markup=1
+actions=1
+history=1
+default-timeout=3500
+ignore-timeout=0
+
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#4c566a
+progress-color=over #4c566a
+
+[urgency=low]
+border-color=#4c566a
+default-timeout=2500
+
+[urgency=normal]
+border-color=#4c566a
+
+[urgency=critical]
+background-color=#1e1e2e
+border-color=#4c566a
+default-timeout=0

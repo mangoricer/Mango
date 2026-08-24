@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <object class="GtkMenu" id="menu">
+        <child>
+            <object class="GtkMenuItem" id="item_1">
+                <property name="label">performance</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkMenuItem" id="item_2">
+                <property name="label">balanced</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkMenuItem" id="item_3">
+                <property name="label">power-saver</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkSeparatorMenuItem" id="sep" />
+        </child>
+        <child>
+            <object class="GtkMenuItem" id="item_4">
+                <property name="label">power off</property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkMenuItem" id="item">
+                <property name="label">reboot</property>
+            </object>
+        </child>
+    </object>
+</interface>

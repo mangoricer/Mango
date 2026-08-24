@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Проверяем текущее состояние
+powered=$(bluetoothctl show | grep "Powered:" | awk '{print $2}')
+
+if [[ "$powered" == "yes" ]]; then
+    bluetoothctl power off
+    # На всякий случай
+    rfkill block bluetooth 2>/dev/null
+else
+    rfkill unblock bluetooth 2>/dev/null
+    sleep 0.3
+    bluetoothctl power on
+fi

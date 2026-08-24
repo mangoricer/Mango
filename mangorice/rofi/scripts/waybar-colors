@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+ACCENT_FILE="$HOME/.config/theme/accent"
+STYLE="$HOME/.config/waybar/style.css"
+MAKO="$HOME/.config/mako/config"
+HYPRLOCK="$HOME/.config/hypr/hyprlock.conf"
+
+mkdir -p "$HOME/.config/theme"
+
+chosen=$(echo -e "Nord Blue
+Nord Red
+Nord Green
+Nord Yellow
+Nord Purple
+Nord Orange
+Nord Cyan
+Nord Frost
+Nord Polar Night
+Nord Dark Gray
+Nord Gray
+Nord Light Gray
+Nord Snow
+Nord Frost Gray" | rofi -dmenu -i -p "Accent Color")
+
+[ -z "$chosen" ] && exit 0
+
+case "$chosen" in
+    "Nord Blue")         color="#88c0d0" ;;
+    "Nord Red")          color="#bf616a" ;;
+    "Nord Green")        color="#a3be8c" ;;
+    "Nord Yellow")       color="#ebcb8b" ;;
+    "Nord Purple")       color="#b48ead" ;;
+    "Nord Orange")       color="#d08770" ;;
+    "Nord Cyan")         color="#8fbcbb" ;;
+    "Nord Frost")        color="#5e81ac" ;;
+    "Nord Polar Night")  color="#2e3440" ;;
+    "Nord Dark Gray")    color="#3b4252" ;;
+    "Nord Gray")         color="#434c5e" ;;
+    "Nord Light Gray")   color="#4c566a" ;;
+    "Nord Snow")         color="#d8dee9" ;;
+    "Nord Frost Gray")   color="#81a1c1" ;;
+    *) exit 0 ;;
+esac
+
+echo "$color" > "$ACCENT_FILE"
+
+sed -i \
+    -e "s|@define-color blue .*|@define-color blue $color;|" \
+    -e "s|@define-color red .*|@define-color red $color;|" \
+    -e "s|@define-color green .*|@define-color green $color;|" \
+    -e "s|@define-color mauve .*|@define-color mauve $color;|" \
+    -e "s|@define-color yellow .*|@define-color yellow $color;|" \
+    -e "s|@define-color peach .*|@define-color peach $color;|" \
+    -e "s|#88c0d0|$color|g" \
+    "$STYLE"
+
+if [ -f "$MAKO" ]; then
+    sed -i \
+        -e "s/^border-color=.*/border-color=$color/" \
+        -e "s/^progress-color=.*/progress-color=over $color/" \
+        "$MAKO"
+    makoctl reload 2>/dev/null || (killall mako; mako &)
+fi
+
+ROFI_THEME="/home/ellio/.config/rofi/themes/nord-me.rasi"
+
+if [ -f "$ROFI_THEME" ]; then
+    sed -i "s/accent: *#[0-9a-fA-F]*/accent: $color/" "$ROFI_THEME"
+fi
+
+EWW_SCSS="$HOME/.config/eww/eww.scss"
+
+if [ -f "$EWW_SCSS" ]; then
+    sed -i "s/\$accent: #[0-9a-fA-F]\{6\};/\$accent: $color;/g" "$EWW_SCSS"
+    eww reload
+fi
+
+pkill waybar
+waybar &
+
+eww reload
+
+notify-send "Accent" "$chosen → $color"

@@ -1,0 +1,31 @@
+#window
+focuscolor=0x88c0d0ff
+bordercolor=0x3b4252ff
+border_radius=12
+borderpx=2
+
+#binds
+exec-once=waybar
+exec-once=awww-daemon
+
+bind=SUPER,t,spawn,kitty
+bind=SUPER,d,spawn,rofi -show drun
+bind=SUPER,e,spawn,thunar
+bind=SUPER,f,spawn,firefox
+bind=SUPER,z,togglefloating
+bind=SUPER,r,spawn,4kwall
+bind=SUPER,s,spawn,spotify
+bind=SUPER,w,edex-ui
+bind=SUPER,q,killclient
+bind=SUPER,m,android-file-transfer
+
+#workspace 1-9
+bind=SUPER,1,view,1,0
+bind=SUPER,2,view,2,0
+bind=SUPER,3,view,3,0
+bind=SUPER,4,view,4,0
+bind=SUPER,5,view,5,0
+bind=SUPER,6,view,6,0
+bind=SUPER,7,view,7,0
+bind=SUPER,8,view,8,0
+bind=SUPER,9,view,9,0

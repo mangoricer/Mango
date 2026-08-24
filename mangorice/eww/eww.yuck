@@ -1,0 +1,160 @@
+(deflisten title :initial "Nothing playing"
+  "playerctl metadata --format '{{title}}' --follow || echo 'Nothing playing'")
+
+(deflisten artist :initial ""
+  "playerctl metadata --format '{{artist}}' --follow || echo ''")
+
+(deflisten status :initial "Stopped"
+  "playerctl status --follow || echo 'Stopped'")
+
+(defpoll position :interval "1s"
+  "playerctl position 2>/dev/null || echo 0")
+
+(defpoll length :interval "2s"
+  "playerctl metadata mpris:length 2>/dev/null | awk '{print $1/1000000}' || echo 1")
+
+(defpoll pos_fmt :interval "1s"
+  "playerctl position --format '{{duration(position)}}' 2>/dev/null || echo '0:00'")
+
+(defpoll len_fmt :interval "2s"
+  "playerctl metadata --format '{{duration(mpris:length)}}' 2>/dev/null || echo '0:00'")
+
+(defpoll cover :interval "3s"
+  "/home/ellio/.config/eww/scripts/get-cover")
+
+(defwidget player []
+  (box :class "player"
+       :orientation "v"
+       :space-evenly false
+       :spacing 12
+       :halign "fill"
+
+    ; Обложка
+    (box :halign "center"
+      (box :class "cover"
+           :style "background-image: url('${cover}');"
+           :width 120
+           :height 120
+        (box :class "cover-hole"
+             :halign "center"
+             :valign "center"
+             :hexpand true
+             :vexpand true)))
+
+    ; Текст
+    (label :class "title" :text title :limit-width 26 :halign "center")
+    (label :class "artist" :text artist :limit-width 26 :halign "center")
+
+    ; Прогресс
+    (scale :class "progress"
+           :min 0
+           :max {length}
+           :value {position}
+           :onchange "playerctl position {}")
+
+    (box :orientation "h" :space-evenly true :halign "fill"
+      (label :class "time" :text pos_fmt)
+      (label :class "time" :text len_fmt))
+
+    ; Кнопки
+    (box :class "controls" :orientation "h" :halign "center" :spacing 22
+      (button :class "btn" :onclick "playerctl previous" "󰒮")
+      (button :class "btn play" :onclick "playerctl play-pause"
+              {status == "Playing" ? "󰏤" : "󰐊"})
+      (button :class "btn" :onclick "playerctl next" "󰒭"))))
+
+; ===== Переменные =====
+(defpoll volume :interval "1s"
+  "pamixer --get-volume")
+
+(defpoll brightness :interval "1s"
+  "brightnessctl -m | cut -d, -f4 | tr -d '%'")
+
+(defpoll wifi_status :interval "2s"
+  "nmcli radio wifi")
+
+(defpoll bt_status :interval "2s"
+  "bluetoothctl show | grep 'Powered:' | awk '{print $2}'")
+
+(defpoll cpu_temp :interval "3s"
+  "cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null | awk '{print int($1/1000)}' || echo 0")
+
+(defpoll ram :interval "3s"
+  "free -m | awk '/Mem:/ {printf \"%d\", $3/$2*100}'")
+
+(defpoll cpu :interval "3s"
+  "top -bn1 | grep 'Cpu(s)' | awk '{print int($2+$4)}'")
+
+; ===== Виджет =====
+(defwidget control []
+  (box :class "control"
+       :orientation "v"
+       :space-evenly false
+       :spacing 14
+
+    ; ===== Переключатели =====
+    (box :class "toggles" :orientation "h" :space-evenly true :spacing 10
+      (button :class "toggle ${wifi_status == 'enabled' ? 'active' : ''}"
+              :onclick "\~/.config/eww/scripts/wifi"
+              (box :orientation "v" :spacing 4
+                (label :text "󰤨" :class "toggle-icon")
+                (label :text "Wi-Fi" :class "toggle-label")))
+
+      (button :class "toggle ${bt_status == 'yes' ? 'active' : ''}"
+              :onclick "\~/.config/eww/scripts/bluetooth"
+              (box :orientation "v" :spacing 4
+                (label :text "󰂯" :class "toggle-icon")
+                (label :text "Bluetooth" :class "toggle-label")))
+
+      (button :class "toggle"
+              :onclick "\~/.config/eww/scripts/airplane"
+              (box :orientation "v" :spacing 4
+                (label :text "󰀝" :class "toggle-icon")
+                (label :text "Airplane" :class "toggle-label"))))
+
+    ; ===== Слайдеры =====
+    (box :orientation "v" :spacing 8
+      (box :class "slider-row" :orientation "h" :spacing 10
+        (label :text "󰃠" :class "slider-icon")
+        (scale :class "slider"
+               :min 0 :max 100
+               :value brightness
+               :onchange "brightnessctl set {}%"))
+
+      (box :class "slider-row" :orientation "h" :spacing 10
+        (label :text "󰕾" :class "slider-icon")
+        (scale :class "slider"
+               :min 0 :max 100
+               :value volume
+               :onchange "pamixer --set-volume {}")))
+
+    ; ===== Системная информация =====
+    (box :class "stats" :orientation "v" :spacing 6
+      (box :orientation "h" :space-evenly true
+        (label :text "CPU ${cpu}%" :class "stat")
+        (label :text "RAM ${ram}%" :class "stat")
+        (label :text "${cpu_temp}°C" :class "stat")))))
+
+; ===== Окно =====
+(defwindow control
+  :monitor 0
+  :geometry (geometry :x "20px"
+                      :y "20px"
+                      :width "320px"
+                      :height "260px"
+                      :anchor "top right")
+  :stacking "overlay"
+  :wm-ignore true
+  :namespace "eww"
+  (control))
+
+(defwindow player
+  :monitor 0
+  :geometry (geometry :x "20px"
+                      :y "20px"
+                      :width "300px"
+                      :height "40px"
+                      :anchor "top left")
+  :stacking "overlay"
+  :wm-ignore true
+  (player))

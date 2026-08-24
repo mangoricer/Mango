@@ -1,0 +1,292 @@
+/*это код vswaybar-studio*/
+@define-color base     #141a25;
+@define-color mantle   #202632;
+@define-color crust    #202632;
+@define-color surface0 #d8dee9;
+@define-color surface1 #d8dee9;
+@define-color overlay0 #d8dee9;
+@define-color text #d8dee9;
+@define-color subtext0 #d8dee9;
+@define-color blue #4c566a;
+@define-color mauve #4c566a;
+@define-color red #4c566a;
+@define-color green #4c566a;
+@define-color yellow #4c566a;
+@define-color peach #4c566a;
+
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: @text;
+}
+
+window#waybar > box {
+    background: alpha(@base, 0.5);
+    border-radius: 20px;
+    margin: 2px 2px 2px 2px;
+    padding: 0 8px;
+    border: 0px;
+}
+
+
+.modules-left,
+.modules-center,
+.modules-right {
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    min-height: 0;
+}
+
+#custom-arch {
+    color: @blue;
+    padding: 0 10px 0 15px;
+}
+
+
+#window {
+    color: @subtext0;
+    font-style: italic;
+}
+
+#clock {
+    color: @mauve;
+    font-weight: bold;
+    border-radius: 9999px;
+    padding: 0 20px;
+}
+
+
+#cpu {
+    color: @peach;
+}
+
+#memory {
+    color: @mauve;
+}
+
+#battery {
+    color: @green;
+}
+
+#battery.warning {
+    color: @yellow;
+}
+
+#battery.critical {
+    color: @red;
+}
+
+#battery.charging {
+    color: @green;
+}
+
+#network {
+    color: @green;
+}
+
+#network.disconnected {
+    color: @red;
+}
+
+#pulseaudio {
+    color: @blue;
+}
+
+#pulseaudio.muted {
+    color: @overlay0;
+}
+
+#tray {
+    color: @subtext0;
+}
+
+#custom-weather {
+    color: @peach;
+}
+
+#custom-updates {
+    color: @green;
+}
+
+#custom-updates.pending {
+    color: @yellow;
+}
+
+#custom-swaync {
+    color: @text;
+}
+
+#custom-power {
+    color: @red;
+}
+
+#custom-settings {
+    color: @subtext0;
+}
+
+tooltip {
+    background: @surface0;
+    border: 1px solid @overlay0;
+    border-radius: 8px;
+    color: @text;
+}
+
+tooltip label {
+    color: @text;
+}
+window#waybar #clock, window#waybar #cpu, window#waybar #memory, window#waybar #network,
+window#waybar #pulseaudio, window#waybar #battery, window#waybar #tray,
+window#waybar #custom-updates, window#waybar #custom-weather, window#waybar #custom-swaync,
+window#waybar #custom-power, window#waybar #custom-settings, window#waybar #custom-claudebar,
+window#waybar #custom-bar-cpu, window#waybar #custom-bar-mem,
+window#waybar #custom-bar-vol, window#waybar #custom-bar-wifi {
+    padding: 0 9px;
+}
+window#waybar #custom-arch {
+    padding: 0 5px 0 5px;
+}
+window#waybar #custom-bar-cpu  { color: @peach; }
+window#waybar #custom-bar-mem  { color: @mauve; }
+window#waybar #custom-bar-vol  { color: @blue; }
+window#waybar #custom-bar-wifi { color: @green; }
+
+window#waybar #custom-main {
+    padding: 0 9px;
+    color: @blue;
+}
+
+window#waybar .modules-left > *, window#waybar .modules-center > *, window#waybar .modules-right > * {
+    border-right: 0px solid #3b4252;
+}
+window#waybar .modules-left > *:last-child,
+window#waybar .modules-center > *:last-child,
+window#waybar .modules-right > *:last-child {
+    border-right: none;
+}
+window#waybar #clock {
+    background: @blue;
+    color: @base;
+    border-radius: 9px;
+    margin: 2px 0;
+}
+window#waybar #bluetooth {
+    background: @blue;
+    color: @base;
+    border-radius: 9px;
+    margin: 2px 0;
+}
+
+
+window#waybar.dock * {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 22px;
+}
+
+window#waybar.dock {
+    background: transparent;
+    border: none;
+}
+
+window#waybar.dock .modules-left,
+window#waybar.dock .modules-center,
+window#waybar.dock .modules-right {
+    background: transparent;
+    border: none;
+    padding: 0;
+    min-height: 0;
+    min-width: 0;
+}
+
+window#waybar.dock .modules-center {
+    background: alpha(@base, 1.00);
+    border-radius: 14px;
+    padding: 4px 14px;
+    border: 2px solid @surface0;
+    min-height: 0;
+}
+
+window#waybar.dock #custom-rofi,
+window#waybar.dock #custom-firefox,
+window#waybar.dock #custom-nautilus,
+window#waybar.dock #custom-dolphin,
+window#waybar.dock #custom-terminal,
+window#waybar.dock #custom-vscode {
+    padding: 4px 14px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    min-width: 30px;
+}
+
+window#waybar.dock #custom-rofi { color: #ff79c6; }
+window#waybar.dock #custom-firefox { color: #89b4fa; }
+window#waybar.dock #custom-nautilus { color: #f1fa8c; }
+window#waybar.dock #custom-dolphin { color: #f1fa8c; }
+window#waybar.dock #custom-terminal { color: #50fa7b; }
+window#waybar.dock #custom-vscode { color: #bd93f9; }
+
+window#waybar.dock #custom-rofi:hover { color: @mauve; background: rgba(203,166,247,0.12); }
+window#waybar.dock #custom-firefox:hover { color: @blue; background: rgba(139,213,202,0.12); }
+window#waybar.dock #custom-nautilus:hover { color: @yellow; background: rgba(249,226,175,0.12); }
+window#waybar.dock #custom-dolphin:hover { color: @yellow; background: rgba(249,226,175,0.12); }
+window#waybar.dock #custom-terminal:hover { color: @green; background: rgba(166,227,161,0.12); }
+window#waybar.dock #custom-vscode:hover { color: @mauve; background: rgba(203,166,247,0.12); }
+
+menu {
+    background-color: rgba(30, 30, 46, 0.55);
+    border: 1px solid #2e3440;
+    border-radius: 14px;
+    padding: 6px;
+    margin: 4px;
+    color: #eceff4;
+    font-size: 13px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+    background-clip: padding-box;
+    -gtk-outline-radius: 14px;
+}
+
+menu > box,
+menu > widget,
+menu box {
+    border-radius: 12px;
+    background-color: transparent;
+    background-clip: padding-box;
+}
+
+menuitem {
+    border-radius: 9px;
+    padding: 8px 14px;
+    margin: 2px 0;
+    color: #eceff4;
+    transition: all 0.15s ease;
+    background-clip: padding-box;
+}
+
+menuitem:hover {
+    background-color: rgba(136, 192, 208, 0.25);
+    color: #2e3440;
+}
+
+menuitem:active,
+menuitem:selected {
+    background-color: rgba(136, 192, 208, 0.35);
+    color: #2e3440;
+}
+
+menu separator {
+    background-color: rgba(136, 192, 208, 0.3);
+    margin: 4px 8px;
+}
+
+menuitem:disabled {
+    color: #6c7086;
+}

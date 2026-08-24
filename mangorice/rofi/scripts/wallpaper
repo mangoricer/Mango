@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+WALL_DIR="$HOME/Изображения/Wallpapers"
+BACKEND="awww img"          # ← поменяй если нужно
+TRANSITION="--transition-type grow --transition-duration 1.2"
+
+chosen=$(for img in "$WALL_DIR"/*.{jpg,jpeg,png,webp,gif,JPG,JPEG,PNG,WEBP,GIF}; do
+    [[ -f "$img" ]] || continue
+    name=$(basename "$img")
+    name_no_ext="${name%.*}"
+    echo -en "$name_no_ext\0icon\x1f$img\n"
+done | rofi -dmenu -i -show-icons -p " Wallpaper" \
+    -theme-str '
+        window { width: 70%; }
+        listview { columns: 4; lines: 3; spacing: 12px; }
+        element { orientation: vertical; padding: 10px; border-radius: 12px; }
+        element-icon { size: 150px; }
+        element-text { horizontal-align: 0.5; font: "JetBrainsMono Nerd Font 11"; }
+    ')
+
+if [[ -n "$chosen" ]]; then
+    # Ищем полный путь по имени без расширения
+    full_path=$(find "$WALL_DIR" -type f \( -iname "$chosen.*" \) | head -n 1)
+    
+    if [[ -n "$full_path" ]]; then
+        $BACKEND "$full_path" $TRANSITION
+        notify-send "Wallpaper" "Установлен: $chosen" -i "$full_path"
+    fi
+fi
