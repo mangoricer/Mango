@@ -6,17 +6,17 @@
 если нашли баги или есть идеи что добавить пишите мне
 ## TG @sjoffical27 
 или заходите в наш чат по ссылке ниже 
-# https://t.me/linux_droidvalds
-#  @linux_droidvalds
+https://t.me/linux_droidvalds
+# @linux_droidvalds
 
 
 
-          обязательно скачать    :         
-## rofi                           
-## waybar                       
-## mako                            
-## hyprlock                        
-## nmtui                           
-## blueman                         
-## pavucontrol                     
-## playerctl                       
+##          обязательно скачать    :         
+ rofi                           
+ waybar                       
+ mako                            
+ hyprlock                        
+ nmtui                           
+ blueman                         
+ pavucontrol                     
+ playerctl                       
