@@ -10,16 +10,16 @@ https://t.me/linux_droidvalds
 
 для нормальной работы нужно скачать
 
-          обязательно              |            по желанию
------------------------------------+-----------------------------------
-   rofi                            |  vswaybar-studio
-   waybar                          |  (пока что все)
-   mako                            |
-   hyprlock                        |
-   nmtui                           |
-   blueman                         |
-   pavucontrol                     |
-   playerctl                       |
+#          обязательно              |            по желанию
+#-----------------------------------+-----------------------------------
+#  rofi                            |  vswaybar-studio
+#  waybar                          |  (пока что все)
+#  mako                            |
+#  hyprlock                        |
+#  nmtui                           |
+#  blueman                         |
+#  pavucontrol                     |
+#  playerctl                       |
    
 
        __       __    ________   __   __  __   __
