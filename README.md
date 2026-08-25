@@ -20,5 +20,5 @@ https://t.me/linux_droidvalds
  blueman                         
  pavucontrol                     
  playerctl                       
- eww
+ eww      ,    
  network manager
