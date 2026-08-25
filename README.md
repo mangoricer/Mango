@@ -21,5 +21,4 @@ https://t.me/linux_droidvalds
  pavucontrol                     
  playerctl                       
  eww
- 
  network manager
